@@ -1,0 +1,34 @@
+﻿@page "/lightningbits"
+@inject NavigationManager _navigationManager
+
+<HeadContent>
+    <meta name="description" content="@Description" />
+    <meta property="og:title" content="@Title" />
+    <meta property="og:description" content="@Description" />
+    <meta property="og:image" content="@ImageUrl" />
+    <meta name="twitter:title" content="@Title" />
+    <meta name="twitter:description" content="@Description" />
+    <meta name="twitter:image" content="@ImageUrl" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="@(_navigationManager.Uri)" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="@(_navigationManager.Uri)" />
+</HeadContent>
+
+<PageTitle>@Title</PageTitle>
+
+<LandingPageBanner></LandingPageBanner>
+@*<AboutUsBanner></AboutUsBanner>*@
+@*<MainProductsMosiac></MainProductsMosiac>y
+    <BlogBanner></BlogBanner>
+    <MainServices></MainServices>
+    <TestimonialQuotes></TestimonialQuotes>
+    <SecondaryServices></SecondaryServices>*@
+@*<_FooterDarkGray></_FooterDarkGray>*@
+
+@code {
+    private string Title = "LightningBits.com";
+    private string Description = "Personalized Software Solutions for Your Unique Needs. With a focus on innovation and customization, I create software tailored to meet the specific needs of your business. As a dedicated developer, I work closely with you to understand your requirements and deliver software that drives success and efficiency. Trust me for your software needs and see your business soar.";
+    private string ImageUrl = "/img/lb_logoLight.jpg";
+}
+

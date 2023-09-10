@@ -1,0 +1,77 @@
+﻿@inject IBlogService _blogService
+@inject IProductService _productService
+@inject NavigationManager _navigationManager
+@inject MudBlazor.ISnackbar snackBar
+
+
+<div class="container mx-auto flex flex-wrap">
+    <div class="w-full md:w-1/2 lg:w-1/2 mt-4">
+        <div class="max-w-5xl mx-auto pt-10 px-5">
+            <h1 class="font-display-italic text-center font-extrabold text-5xl md:text-6xl italic leading-none mb-6">Testimonials</h1>
+        </div>
+        <MudCard Elevation="25">
+            <MudCarousel Class="mud-width-full" Style="height:350px" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" ShowBullets="@bullets" TData="object">
+                @foreach (var prod in ECommerceProducts)
+                {
+                    if (prod.Category.Name == CategoryName)
+                    {
+                        <MudCarouselItem Transition="Transition.Fade" Class="flex flex-col">
+                            <div class="w-full mx-auto">
+                                <img src="@prod.ImageUrl" alt="@prod.Name" />
+                            </div>
+                        </MudCarouselItem>
+                    }
+                }
+            </MudCarousel>
+        </MudCard>
+    </div>
+    <div class="w-full md:w-1/2 lg:w-1/2 mt-4">
+        <div class="max-w-5xl mx-auto pt-10 px-5">
+            <h1 class="font-display-italic text-center font-extrabold text-5xl md:text-6xl italic leading-none mb-6">My Blog</h1>
+        </div>
+        <MudCard Elevation="25">
+            <MudCarousel Class="mud-width-full" Style="height:350px" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" ShowBullets="@bullets" TData="object">
+                @foreach (var blog in Blogs.Where(u => u.Featured == true).OrderByDescending(b => b.DateCreated).Take(5))
+                {
+                    <MudCarouselItem Transition="Transition.Fade" Class="flex flex-col">
+                        <div class="p-10">
+                            <div class="mx-auto flex justify-center">
+                                <a href="@($"/lightningbits/blog/page/{blog.Id}")" class="text-lg font-extrabold font-display-italic no-underline hover:underline">
+                                    @((MarkupString)blog.Name)
+                                </a>
+                            </div>
+                            <div class="mx-auto mt-10 flex justify-center">
+                                <a href="@($"/lightningbits/blog/page/{blog.Id}")" class="text-md">
+                                    @((MarkupString)blog.Description)
+                                </a>
+                            </div>
+                        </div>
+                    </MudCarouselItem>
+                }
+            </MudCarousel>
+        </MudCard>
+    </div>
+</div>
+
+
+@code {
+    public bool IsProcessing { get; set; } = false;
+    public IEnumerable<BlogDTO> Blogs { get; set; } = new List<BlogDTO>();
+    public IEnumerable<ProductDTO> ECommerceProducts { get; set; } = new List<ProductDTO>();
+    public string CategoryName = "Testimonials";
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsProcessing = true;
+        Blogs = await _blogService.GetAll();
+        ECommerceProducts = await _productService.GetAll();
+        IsProcessing = false;
+    }
+
+    //private bool arrows = true;
+    private bool bullets = false;
+    private bool enableSwipeGesture = true;
+    private bool autocycle = true;
+    private Transition transition = Transition.Fade;
+}
+

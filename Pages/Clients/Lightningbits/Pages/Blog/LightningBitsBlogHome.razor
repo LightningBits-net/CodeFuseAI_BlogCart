@@ -1,0 +1,39 @@
+﻿@page "/lightningbits/Blog"
+@page "/BlogviewHome"
+@inject NavigationManager _navigationManager
+
+<PageTitle>@Title</PageTitle>
+<HeadContent>
+    <meta name="description" content="@Description" />
+    <meta property="og:title" content="@Title" />
+    <meta property="og:description" content="@Description" />
+    <meta property="og:image" content="@ImageUrl" />
+    <meta name="twitter:title" content="@Title" />
+    <meta name="twitter:description" content="@Description" />
+    <meta name="twitter:image" content="@ImageUrl" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="@(_navigationManager.Uri)" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="@(_navigationManager.Uri)" />
+</HeadContent>
+
+<div class="w-full">
+    <_LightningBitsBlogBanner></_LightningBitsBlogBanner>
+    <div class="container max-w-4xl mx-auto md:flex items-start py-8 px-12 md:px-0">
+        <_LightningBitsBlogByCat></_LightningBitsBlogByCat>
+        <_LightningBitsRightSide></_LightningBitsRightSide>
+    </div>
+</div>
+<_LightningBitsFooter></_LightningBitsFooter>
+
+
+@code {
+
+    private string Title = "MyBlog";
+    private string Description =
+        "Explore the power of C# and .NET Blazor in this in-depth blog post. " +
+        "Learn how to build web applications with Blazor and take advantage of its powerful features.";
+    private string ImageUrl = "/img/Matrixlaptop.png";
+
+}
+

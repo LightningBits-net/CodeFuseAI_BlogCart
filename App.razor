@@ -1,0 +1,26 @@
+﻿@inject DomainLayoutService DomainLayoutService
+@inject IHttpContextAccessor HttpContextAccessor
+
+@using CodeFuseAI_BlogCart.Pages
+
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        @{
+            var domain = HttpContextAccessor.HttpContext.Request.Host.Value.ToLower();
+            var layoutType = DomainLayoutService.GetLayoutForDomain(domain);
+        }
+        <RouteView RouteData="@routeData" DefaultLayout="@layoutType" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <_UnderConstruction></_UnderConstruction>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+
+
+
+
+

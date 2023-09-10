@@ -1,0 +1,94 @@
+﻿@page "/lightningbits/Blog/Page/{BlogId:int}"
+@inject IBlogService _blogService
+@inject NavigationManager _navigationManager
+@inject MudBlazor.ISnackbar snackBar
+
+@using System.Text.RegularExpressions
+
+<PageTitle>@BlogTitle</PageTitle>
+<HeadContent>
+    <meta name="description" content="@BlogDescription" />
+    <meta property="og:title" content="@BlogTitle" />
+    <meta property="og:description" content="@BlogDescription" />
+    <meta property="og:image" content="@Blog.ImageUrl" />
+    <meta name="twitter:title" content="@BlogTitle" />
+    <meta name="twitter:description" content="@BlogDescription" />
+    <meta name="twitter:image" content="@Blog.ImageUrl" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="@(_navigationManager.Uri)" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="@(_navigationManager.Uri)" />
+</HeadContent>
+
+@if (IsProcessing)
+{
+    <div class="text-center">
+        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+    </div>
+}
+else
+{
+    <div class="w-full bg-gray-200">
+        <div class="lg:w-1/2 mx-auto pb-10 pt-10 ">
+            <MudCard Elevation="25">
+                <div class="p-4 md:p-10 lg:p-20 rounded overflow-hidden shadow-2xl">
+                    <div class="flex justify-center mb-2">
+                        <img class="w-full md:w-1/2 lg:w-1/3" src="@Blog.ImageUrl" alt="@Blog.Description">
+                    </div>
+                    <div class="text-3xl mb-2 flex justify-center">
+                        <h1>@((MarkupString)Blog.Name)</h1>
+                    </div>
+                    <div>
+                        <p>
+                            @((MarkupString)Blog.Body)
+                        </p>
+                    </div>
+
+                    <div class="px-6 pt-4 pb-2 text-center">
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Written by: @Blog.Author</span>
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Published on @Blog.DateCreated.ToString("MMMM dd, yyyy")</span>
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Viewed: @(Math.Floor(Blog.Views))</span>
+                    </div>
+                    <div class="flex justify-center mt-4">
+                        <MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="@(() => _navigationManager.NavigateTo("/lightningbits/Blog"))">Return</MudButton>
+                    </div>
+                </div>
+            </MudCard>
+        </div>
+        <div class="pb-10">
+            <_BlogCarusel></_BlogCarusel>
+        </div>
+    </div>
+}
+
+
+
+@code {
+
+    [Parameter]
+    public int BlogId { get; set; }
+    public BlogDTO Blog { get; set; } = new();
+    public bool IsProcessing { get; set; } = false;
+    public string BlogTitle { get; set; }
+    public string BlogDescription { get; set; }
+    private bool _firstRender = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        IsProcessing = true;
+        Blog = await _blogService.Get(BlogId);
+
+        IsProcessing = false;
+
+        BlogTitle = Regex.Replace(Blog.Name, "<.*?>", string.Empty);
+        BlogDescription = Regex.Replace(Blog.Description, "<.*?>", string.Empty);
+
+        StateHasChanged();
+    }
+
+
+
+}
+
