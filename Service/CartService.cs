@@ -1,7 +1,7 @@
 ﻿using System;
 using Blazored.LocalStorage;
 using CodeFuseAI_BlogCart.ViewModels;
-using SharedServices.Commons;
+using CodeFuseAI_Shared.Commons;
 
 namespace CodeFuseAI_BlogCart.Service
 {

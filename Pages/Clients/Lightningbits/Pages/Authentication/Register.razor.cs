@@ -1,7 +1,7 @@
 ﻿//using System;
 //using ECommerce_Client.Service.IService;
 //using Microsoft.AspNetCore.Components;
-//using SharedServices.Models;
+//using CodeFuseAI_Shared.Models;
 
 //namespace ECommerce_Client.Pages.Authentication
 //{

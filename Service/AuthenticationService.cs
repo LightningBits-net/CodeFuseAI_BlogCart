@@ -2,8 +2,8 @@
 //using Blazored.LocalStorage;
 //using Microsoft.AspNetCore.Components.Authorization;
 //using Newtonsoft.Json;
-//using SharedServices.Commons;
-//using SharedServices.Models;
+//using CodeFuseAI_Shared.Commons;
+//using CodeFuseAI_Shared.Models;
 //using System.Net.Http.Headers;
 //using System.Text;
 //using ECommerce_Client.Service.IService;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using SharedServices.Models;
+using CodeFuseAI_Shared.Models;
 
 namespace CodeFuseAI_BlogCart.ViewModels
 {

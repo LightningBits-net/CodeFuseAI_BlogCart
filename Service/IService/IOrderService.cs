@@ -1,6 +1,6 @@
 ﻿using System;
-using SharedServices.Data;
-using SharedServices.Models;
+using CodeFuseAI_Shared.Data;
+using CodeFuseAI_Shared.Models;
 
 namespace CodeFuseAI_BlogCart.Service.IService
 {
